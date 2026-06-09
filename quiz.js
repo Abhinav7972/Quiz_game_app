@@ -7,6 +7,8 @@ const queOBJ =
     questions: 'How many peices of bun in Macdonald Big mac?'
 };
 
+    let score = 0;
+
 
 const questionel = document.getElementById('questions');
 const optionel = document.getElementById('options');
@@ -26,6 +28,24 @@ questionel.textContent = questions;
 options.forEach((op) => {
     const button = document.createElement('button');
     button.textContent = op;
+  
+    button.addEventListener('click', () => {
+        if (op == correctanswer)
+        {
+            score++;
+            scoreel.textContent = score;
+            button.disabled = true;
+        }
+
+        else
+        {
+            score = score - 0.25;
+            scoreel.textContent = score;
+            button.disabled = true;
+        }
+    })
+
     optionel.appendChild(button);
 })
+
 
