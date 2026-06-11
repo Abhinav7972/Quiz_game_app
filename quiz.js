@@ -65,12 +65,21 @@ const prevbtn = document.getElementById('prev');
 
 function showquestion()
 {
+  if (
+    currentquestion < 0 ||
+    currentquestion >= quesJSON.length
+) {
+    return;
+}
+
+ 
     const { correctAnswer, question, options } = quesJSON[currentquestion];
     questionel.textContent = question;
     
     const shuffledOptions = shuffleoptions([...options]);
     optionel.innerHTML = ''; // Clear previous options
 
+  
   shuffledOptions.forEach((opt) => {
     const btn = document.createElement('button');
         btn.classList.add('btn');
@@ -125,18 +134,20 @@ nextbtn.addEventListener('click', () => {
       optionel.style.display = 'none';
       nextbtn.style.display = 'none';
       restartbtn.style.display = 'block';
-    
+
     }
 });
 
 
 prevbtn.addEventListener('click', () => {
-  currentquestion--;
-  if (currentquestion >= 0)
-  {
+  if (currentquestion < quesJSON.length && currentquestion >0) {
+    currentquestion--;
     showquestion();
   }
-})
+ 
+
+});
+
 
 showquestion();
 
