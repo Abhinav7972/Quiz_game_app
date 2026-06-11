@@ -1,76 +1,141 @@
-const queOBJ =
-{
-    Category: 'Food and drinks',
-    id: 'qa-1',
-    correctanswer: 'three',
-    options: ['one', 'two', 'three', 'four','five'],
-    questions: 'How many peices of bun in Macdonald Big mac?'
-};
-
-    let score = 0;
+const quesJSON = [
+  {
+    correctAnswer: 'Three ',
+    options: ['Two', 'Three ', 'Four', 'Five'],
+    question:
+      "How many pieces of bun are in a Mcdonald's Big Mac?",
+  },
+  {
+    correctAnswer: 'L. Frank Baum',
+    options: [
+      'Suzanne Collins',
+      'James Fenimore Cooper',
+      'L. Frank Baum',
+      'Donna Leon',
+    ],
+    question:
+      "Which author wrote 'The Wonderful Wizard of Oz'?",
+  },
+  {
+    correctAnswer: 'Atlanta United',
+    options: [
+      'Atlanta United',
+      'Atlanta Impact',
+      'Atlanta Bulls',
+      'Atlanta Stars',
+    ],
+    question:
+      'Which of these is a soccer team based in Atlanta?',
+  },
+  {
+    correctAnswer: 'A Nanny',
+    options: [
+      'A Sow',
+      'A Lioness',
+      'A Hen',
+      'A Nanny',
+    ],
+    question: 'A female goat is known as what?',
+  },
+  {
+    correctAnswer: 'P. L. Travers',
+    options: [
+      'J. R. R. Tolkien',
+      'P. L. Travers',
+      'Lewis Carroll',
+      'Enid Blyton',
+    ],
+    question:
+      "Which author wrote 'Mary Poppins'?",
+  },
+];
+   
+let score = 0;
+let currentquestion = 0;
 
 
 const questionel = document.getElementById('questions');
 const optionel = document.getElementById('options');
 const scoreel = document.getElementById('score');
+const nextbtn = document.getElementById('next');
 
 
 
+function showquestion()
+{
+    const { correctAnswer, question, options } = quesJSON[currentquestion];
+    questionel.textContent = question;
+    
+    const shuffledOptions = shuffleoptions([...options]);
+    optionel.innerHTML = ''; // Clear previous options
+
+  shuffledOptions.forEach((opt) => {
+    const btn = document.createElement('button');
+        btn.classList.add('btn');
+    btn.textContent = opt;
+    
+       
+        btn.addEventListener('click', () => {
+            if (opt == correctAnswer)
+            {
+                score++;
+              scoreel.textContent = score;
+                btn.style.backgroundColor = 'green';
+              btn.style.color = 'white';
+            }
+            else   
+            {
+                score = score - 0.25;
+              scoreel.textContent = score;
+                btn.style.backgroundColor = 'red';
+              btn.style.color = 'white';
+          }
 
 
+          const optbtn =  optionel.querySelectorAll('.btn');
 
-const { correctanswer, questions, options } = queOBJ;
+           //console.log(optbtn.length);
+
+          optbtn.forEach((btn) => {
+            btn.disabled = true;
+           })
+       
+        })
+    
+    
+      
+    
+         
+        optionel.appendChild(btn);
+    });
+    
+   
+
+}
+
+nextbtn.addEventListener('click', () => {
+    currentquestion++;
+    if (currentquestion < quesJSON.length) {
+        showquestion();
+    } else {
+      questionel.textContent = "Quiz Completed!";
+         scoreel.textContent = `Total Score : ${score}`
+        optionel.innerHTML = '';
+    }
+});
 
 
-
-questionel.textContent = questions;
-
-options.forEach((op) => {
-    const button = document.createElement('button');
+showquestion();
 
 
-    button.textContent = op;
-  
-    button.addEventListener('click', () => {
-        if (op == correctanswer)
-        {
-            score++;
-            scoreel.textContent = score;
-            button.disabled = true;
-        }
+   
 
-        else
-        {
-            score = score - 0.25;
-            scoreel.textContent = score;
-            button.disabled = true;
-        }
-
-        questionel.textContent = `quiz completed`
-        optionel.textContent = '';
-        optionel.style.display = 'none';
-    })
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. Select the container holding your buttons and the buttons themselves
-    const container = document.querySelector('.quiz-cont'); // Change to your actual container class/id
-    const optionsArray = Array.from(container.querySelectorAll('button')); // Convert NodeList to Array
-
-    // 2. Shuffle the array using the Fisher-Yates algorithm (much more reliable)
-    for (let i = optionsArray.length - 1; i > 0; i--) {
+function shuffleoptions(options)
+{
+     for (let i = options.length-1; i >=0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+        [options[i], options[j]] = [options[j], options[i]];
     }
 
-    // 3. Clear the container and append the elements in their new order
-    container.innerHTML = '';
-    optionsArray.forEach(option => container.appendChild(option));
-    })
-
-    optionel.appendChild(button);
-})
-
-
-
-
-
+    return options;
+}
