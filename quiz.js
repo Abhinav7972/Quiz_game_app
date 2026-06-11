@@ -59,6 +59,7 @@ const optionel = document.getElementById('options');
 const scoreel = document.getElementById('score');
 const nextbtn = document.getElementById('next');
 const restartbtn = document.getElementById('restart');
+const prevbtn = document.getElementById('prev');
 
 
 
@@ -128,6 +129,14 @@ nextbtn.addEventListener('click', () => {
     }
 });
 
+
+prevbtn.addEventListener('click', () => {
+  currentquestion--;
+  if (currentquestion >= 0)
+  {
+    showquestion();
+  }
+})
 
 showquestion();
 
