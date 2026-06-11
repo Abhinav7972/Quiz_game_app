@@ -58,6 +58,7 @@ const questionel = document.getElementById('questions');
 const optionel = document.getElementById('options');
 const scoreel = document.getElementById('score');
 const nextbtn = document.getElementById('next');
+const restartbtn = document.getElementById('restart');
 
 
 
@@ -120,7 +121,10 @@ nextbtn.addEventListener('click', () => {
     } else {
       questionel.textContent = "Quiz Completed!";
          scoreel.textContent = `Total Score : ${score}`
-        optionel.innerHTML = '';
+      optionel.style.display = 'none';
+      nextbtn.style.display = 'none';
+      restartbtn.style.display = 'block';
+    
     }
 });
 
