@@ -134,7 +134,7 @@ nextbtn.addEventListener('click', () => {
       optionel.style.display = 'none';
       nextbtn.style.display = 'none';
       restartbtn.style.display = 'block';
-
+      showquestion();
     }
 });
 
@@ -148,6 +148,16 @@ prevbtn.addEventListener('click', () => {
 
 });
 
+
+restartbtn.addEventListener('click', () => {
+  currentquestion = 0;
+  score = 0;
+  scoreel.textContent = score;
+  optionel.style.display = 'flex';
+  nextbtn.style.display = 'block';
+  restartbtn.style.display = 'none';
+  showquestion();
+})
 
 showquestion();
 
