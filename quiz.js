@@ -48,33 +48,46 @@ const quesJSON = [
     question:
       "Which author wrote 'Mary Poppins'?",
   },
-];
+]; //array of object contains question, options and correct answer
+
+
    
-let score = 0;
-let currentquestion = 0;
+let score = 0; //setting inital score to 0
+let currentquestion = 0;  //setting current question count to 0
 
 
-const questionel = document.getElementById('questions');
-const optionel = document.getElementById('options');
-const scoreel = document.getElementById('score');
-const nextbtn = document.getElementById('next');
-const restartbtn = document.getElementById('restart');
-const prevbtn = document.getElementById('prev');
+const questionel = document.getElementById('questions');  //question element
+const optionel = document.getElementById('options'); // option element
+const scoreel = document.getElementById('score');  //score element
+const nextbtn = document.getElementById('next');  //next button
+const restartbtn = document.getElementById('restart'); //restart button
+const prevbtn = document.getElementById('prev'); //previous button
 
 
 
-function showquestion()
+function shuffleoptions(options)  //use to shuffle question when reload takes option array as parameter
+{
+     for (let i = options.length-1; i >=0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+
+    return options;
+}
+
+
+function showquestion() // function to show question 
 {
   if (
     currentquestion < 0 ||
     currentquestion >= quesJSON.length
 ) {
     return;
-}
+}   // if current question count is less than 0 than stop function
 
  
-    const { correctAnswer, question, options } = quesJSON[currentquestion];
-    questionel.textContent = question;
+    const { correctAnswer, question, options } = quesJSON[currentquestion]; //destructructuring object using currentquestion count 
+    questionel.textContent = question;  
     
     const shuffledOptions = shuffleoptions([...options]);
     optionel.innerHTML = ''; // Clear previous options
@@ -124,7 +137,7 @@ function showquestion()
 
 }
 
-function prevquestion()
+function prevquestion()  // used for previous question display
 {
   if (currentquestion < quesJSON.length && currentquestion >0) {
     currentquestion--;
@@ -136,7 +149,7 @@ function prevquestion()
 
 
 
-function nextquestion()
+function nextquestion() //used to display next question
 {
 currentquestion++;
     if (currentquestion < quesJSON.length) {
@@ -153,7 +166,7 @@ currentquestion++;
 
 
 
-function restartquiz()
+function restartquiz() //used to restart quiz 
 {
  currentquestion = 0;
   score = 0;
@@ -165,7 +178,8 @@ function restartquiz()
 }
 
 
-nextbtn.addEventListener('click',nextquestion);
+//event listners on button
+nextbtn.addEventListener('click',nextquestion); 
 
 
 prevbtn.addEventListener('click',prevquestion);
@@ -173,17 +187,8 @@ prevbtn.addEventListener('click',prevquestion);
 
 restartbtn.addEventListener('click',restartquiz)
 
-showquestion();
+showquestion(); //render UI
 
 
    
 
-function shuffleoptions(options)
-{
-     for (let i = options.length-1; i >=0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
-    }
-
-    return options;
-}
