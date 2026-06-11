@@ -90,14 +90,14 @@ function showquestion()
             if (opt == correctAnswer)
             {
                 score++;
-              scoreel.textContent = score;
+              scoreel.textContent =`${score}/${quesJSON.length}`;
                 btn.style.backgroundColor = 'green';
               btn.style.color = 'white';
             }
             else   
             {
                 score = score - 0.25;
-              scoreel.textContent = score;
+              scoreel.textContent = `${score}/${quesJSON.length}`;
                 btn.style.backgroundColor = 'red';
               btn.style.color = 'white';
           }
@@ -124,8 +124,21 @@ function showquestion()
 
 }
 
-nextbtn.addEventListener('click', () => {
-    currentquestion++;
+function prevquestion()
+{
+  if (currentquestion < quesJSON.length && currentquestion >0) {
+    currentquestion--;
+    showquestion();
+  }
+ 
+
+}
+
+
+
+function nextquestion()
+{
+currentquestion++;
     if (currentquestion < quesJSON.length) {
         showquestion();
     } else {
@@ -136,28 +149,29 @@ nextbtn.addEventListener('click', () => {
       restartbtn.style.display = 'block';
       showquestion();
     }
-});
+}
 
 
-prevbtn.addEventListener('click', () => {
-  if (currentquestion < quesJSON.length && currentquestion >0) {
-    currentquestion--;
-    showquestion();
-  }
- 
 
-});
-
-
-restartbtn.addEventListener('click', () => {
-  currentquestion = 0;
+function restartquiz()
+{
+ currentquestion = 0;
   score = 0;
   scoreel.textContent = score;
   optionel.style.display = 'flex';
   nextbtn.style.display = 'block';
   restartbtn.style.display = 'none';
   showquestion();
-})
+}
+
+
+nextbtn.addEventListener('click',nextquestion);
+
+
+prevbtn.addEventListener('click',prevquestion);
+
+
+restartbtn.addEventListener('click',restartquiz)
 
 showquestion();
 
